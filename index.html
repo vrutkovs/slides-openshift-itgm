@@ -38,17 +38,22 @@ class: center, middle
 ![Dead badger](imgs/badger.jpg)
 ???
 * Fedora / CentOS / RHEL (incl. Atomic)
+* Ways of installing the cluster
+  * RPMs
+  * Docker Containers
+  * etcd/master/node/docker/cri-o in "system containers" (runc)
 * Providers
   * Bare metal
   * AWS
   * GCE
   * Azure (coming soon!)
 * Container runtimes
-  * Docker / CRI-O
-  * etcd/master/node/docker/cri-o in system containers
+  * Docker
+  * CRI-O
 * SDN
   * OpenVSwitch
   * Flannel, Calico, Contiv, Nuage, Kuryr-Kubernetes
+
 ---
 ## Batteries Included
 
@@ -121,11 +126,12 @@ template: section
 # Demo
 ### Jenkins Pipelines
 ### Blue - Green deployments
-### Service Catalog
 
 ???
 Namespace: pipelines
+
 Pipelines branch: jenkins
+
 ```
 oc new-project pipelines
 oc new-app --name=jenkins-pipeline http://github.com/vrutkovs/openshift-demo#jenkins
@@ -138,7 +144,9 @@ template: section
 ### Service catalog
 ???
 Namespace: blue-green
+
 Blue-green branch: blue-green
+
 Service Catalog: Amazon RDS
 ---
 template: section
@@ -147,7 +155,9 @@ class: center, bmo
 ![BMO](imgs/BMO.png)
 ???
 Cockpit: https://cloud.vrutkovs.eu:9090/ - needs public port and have root password setup
+
 Prometheus: https://prometheus.cloud.vrutkovs.eu/
+
 Grafana: https://grafana.cloud.vrutkovs.eu/
 ---
 template: section
