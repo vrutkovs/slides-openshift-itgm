@@ -102,8 +102,9 @@ Cluster: https://cloud.vrutkovs.eu:8443/console/
 S2I demo: master branch
 
 ```
-oc new-project woot
-oc new-app --name=spblug-demo http://github.com/vrutkovs/openshift-demo
+oc login ...
+oc new-project itgm
+oc new-app --name=itgm-demo http://github.com/vrutkovs/openshift-demo
 ```
 
 Route: demo.cloud.vrutkovs.eu
@@ -113,7 +114,7 @@ Webhook: https://github.com/vrutkovs/openshift-demo/settings/hooks/23131808
 Custom Dockerfile: custom-dockerfile branch
 
 ```
-oc new-app --name=spblug-custom http://github.com/vrutkovs/openshift-demo#custom-dockerfile
+oc new-app --name=itgm-custom http://github.com/vrutkovs/openshift-demo#custom-dockerfile
 oc create -f route.yaml
 ```
 ---
