@@ -90,3 +90,11 @@ li {
 .inverse .remark-slide-number {
   display: none;
 }
+
+.bmo > p > img {
+  margin-top: -50px;
+}
+
+.bmo > h2 {
+  margin-top: -50px;
+}
