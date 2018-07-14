@@ -163,6 +163,6 @@ Grafana: https://grafana.cloud.vrutkovs.eu/
 ---
 ![shifty](imgs/get_shifty.jpg)
 
-https://vrutkovs.github.io/openshift-kubernetes-with-a-human-face
+https://vrutkovs.github.io/slides-openshift-k8s-human-face/
 
 *<!-- -->* vrutkovs  <!-- .element: class="fab fa-twitter-square" --> *<!-- -->* vrutkovs@redhat.com  <!-- .element: class="fas fa-envelope-square" -->
