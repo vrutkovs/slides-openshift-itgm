@@ -11,24 +11,34 @@ vrutkovs@redhat.com
 Note:
 * Enterprise Kubernetes, developer-focused
 * Forked from Kubernetes codebase, regularly synced with upstream (3 month delay)
-* Not an overlay over k8s and not an additional layer of abstraction
-* Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
 * Origin - upstream version, Openshift Container Platform - enterprise version
 * OCP versions are supported for 2 years
+* Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
 
 ---
 ### What's in the box?
 ![openshift](imgs/openshift.png)
 
+Note:
+* Base layer - your cloud provider / VMs / bare-metal
+* OS with container runtime - Docker / CRI-O
+* SDN / Storage / core services
+* Developer services - CI/CD, Service Catalog, Web Console
+
 ---
 ### Openshift - batteries included
 * OAuth server for authentication
-* Docker registry
+* Container registry
 * HAProxy router
 * CI/CD out-of-the-box via Jenkins Pipelines
 * Source2Image
 
 ![Professor Fortran](imgs/fortran.png)
+
+Note:
+* All things ready to get started
+* Encourages CI / CD
+* Devs don't require low-level Docker knowledge with S2I
 
 ---
 ### Getting Started
@@ -69,6 +79,13 @@ Cloud IDE
 
 https://openshift.io
 
+Note:
+
+* openshift-ansible to install on any infrastructure
+* Online to try-before-you-buy
+* Dedicated - managed by Red Hat on AWS
+* openshift.io to develop Java microservices online using Eclipse Che
+
 ---
 # Demo
 ### Source 2 Image
@@ -77,12 +94,14 @@ https://openshift.io
 
 Note:
 Cluster: https://cloud.vrutkovs.eu:8443/console/
+
 S2I demo: master branch
 
-```
+```shell
 oc login ...
 oc new-project itgm
-oc new-app --name=itgm-demo http://github.com/vrutkovs/openshift-demo
+oc new-app --name=itg-demo https://github.com/vrutkovs/openshift-demo
+oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 ```
 
 Route: demo.cloud.vrutkovs.eu
@@ -143,6 +162,10 @@ Grafana: https://grafana.cloud.vrutkovs.eu/
 
   creates, scales and backs up MySQL containers in kubernetes
 
+Note:
+Cloud-native apps - the apps which are aware of running in k8s and can react to k8s events
+Operators take care of running complicated apps, e.g. databases
+
 ---
 #### Openshift operators
 * **Openshift Metrics Server**
@@ -159,6 +182,12 @@ Grafana: https://grafana.cloud.vrutkovs.eu/
 * **Chargeback**
  
   reports AWS billing, node utilization etc.
+
+Note:
+* metrics server scales your apps with demand
+* problem detector finds and isolates problemtic nodes
+* autoscaler adds more machines to cluster if pods don't have place to fit
+* chargeback find less utilized nodes and may calculate cloud-provider bills
 
 ---
 ![shifty](imgs/get_shifty.jpg)
