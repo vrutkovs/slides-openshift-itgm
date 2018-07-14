@@ -126,11 +126,39 @@ Service Catalog: Amazon RDS
 ![BMO](imgs/BMO.png)
 
 Note:
-Cockpit: https://cloud.vrutkovs.eu:9090/ - needs public port and have root password setup
-
 Prometheus: https://prometheus.cloud.vrutkovs.eu/
 
 Grafana: https://grafana.cloud.vrutkovs.eu/
+
+---
+### See you later, operator
+
+**Operators** - k8s-aware application, which communicate using CRDS (custom resource definitions) and perform actions in the cluster
+
+* **Vault Operator**
+
+  creates and configures Hashicopr's Vault cluster
+
+* **MySQL Operator**
+
+  creates, scales and backs up MySQL containers in kubernetes
+
+---
+#### Openshift operators
+* **Openshift Metrics Server**
+
+  scales deployments based on custom app metrics
+
+* **Node Problem Detector**
+
+  uses Prometheus metric to disable faulty nodes
+
+* **Autoscaler**
+
+  provision additional nodes
+* **Chargeback**
+ 
+  reports AWS billing, node utilization etc.
 
 ---
 ![shifty](imgs/get_shifty.jpg)
