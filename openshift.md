@@ -53,8 +53,6 @@ To login as administrator:
 ```
 
 ---
-#### Install Methods
-
 Install using Ansible
 
 https://docs.openshift.org/latest/install_config/
