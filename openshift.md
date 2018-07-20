@@ -63,67 +63,140 @@ To login as administrator:
 ```
 
 ---
-# Demo
 ### Source 2 Image
 ### Builds, DeploymentConfigs
 ### Routes
 
-Note:
-Cluster: https://cloud.vrutkovs.eu:8443/console/
+---
 
-S2I demo: master branch
+Look mom, no Dockerfile!
 
 ```shell
-oc login ...
-oc new-project itgm
-oc new-app --name=itg-demo https://github.com/vrutkovs/openshift-demo
+oc login https://cloud.vrutkovs.eu -t ...
+oc new-project beer
+oc new-app  \
+   --name=beer-demo \
+   https://github.com/vrutkovs/openshift-demo
 oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 ```
 
-Route: demo.cloud.vrutkovs.eu
+Setup a github webhook to trigger builds on new commits
 
-Webhook: https://github.com/vrutkovs/openshift-demo/settings/hooks/23131808
+---
 
-Custom Dockerfile: custom-dockerfile branch
+![Web Console](imgs/build_logs.png)
+![Build logs](imgs/web_console.png)
 
-```
-oc new-app --name=itgm-custom http://github.com/vrutkovs/openshift-demo#custom-dockerfile
+---
+
+Dockerfile + route settings in YAML
+
+```shell
+oc new-project beer-custom
+oc new-app --name=beer-custom \
+   http://github.com/vrutkovs/openshift-demo#custom-dockerfile
 oc create -f route.yaml
 ```
+
 ---
-# Demo
 ### Jenkins Pipelines
-### Blue - Green deployments
 
-Note:
-Namespace: pipelines
+---
 
-Pipelines branch: jenkins
-
-```
+```shell
 oc new-project pipelines
-oc new-app --name=jenkins-pipeline http://github.com/vrutkovs/openshift-demo#jenkins
+oc new-app --name=jenkins-pipeline \
+   http://github.com/vrutkovs/openshift-demo#jenkins
+```
+
+![Build logs](imgs/jenkins_pipeline.png)
+
+---
+```groovy
+stage("Build") {
+    openshiftBuild
+      buildConfig: "pipeline-app", showBuildLogs: "true"
+}
+
+stage("Deploy to dev") {
+    openshiftDeploy deploymentConfig: "pipeline-app"
+}
+
+stage("Smoketest") {
+  sh "curl -kLvs
+      http://pipeline-app.pipelines.svc:8080/Minsk |
+      grep 'Hello, Minsk'"
+}
+
+stage("Deploy to tested") {
+  openshiftCOLOR
+    srcStream: "pipeline-app", srcCOLOR: 'latest',
+    destinationStream: "pipeline-app",
+    destinationCOLOR: "smoketested"
+  openshiftDeploy deploymentConfig: "pipeline-app-tested"
+}
 ```
 ---
-# Demo
 ### Gitlab CI
 ### Blue-green deployment
-### Service catalog
+---
+```yaml
+before_script:
+  - oc login --insecure-skip-tls-verify=true
+      kubernetes.default.svc --token=$OPENSHIFT_TOKEN
+  - oc project blue-green
+  - export COLOR="blue" ALTCOLOR="green"
+  - export ACTIVE=$(
+      oc get route prod-route -o
+      jsonpath='{ .spec.to.name }' --loglevel=4)
+  - if [ $ACTIVE == "blue" ]; then
+      export COLOR="green" ALTCOLOR="blue"
+    fi
+  - export COLORHOST="$COLOR.blue-green.svc"
 
-Note:
-Namespace: blue-green
+build:
+  stage: build
+  script:
+    - oc start-build blue-green --wait
+```
+---
+```yaml
+deploy:
+  stage: deploy
+  script:
+    - oc COLOR blue-green:latest blue-green:${COLOR}
+    - oc rollout latest dc/${COLOR}
+    - oc rollout status dc/${COLOR} -w
 
-Blue-green branch: blue-green
+autotest:
+  stage: autotest
+  script:
+    - curl -kLs http://${COLORHOST}:8080/ | tee | grep 'Anonymous'
+    - curl -kLs http://${COLORHOST}:8080/beer | tee | grep 'beer'
 
-Service Catalog: Amazon RDS
+canary:
+  stage: canary
+  script:
+    - for i in `seq 10 10 100`; do
+        oc set route-backends prod-route \
+           ${COLOR}=$i ${ALTCOLOR}=$((100-i))
+        && sleep 3;
+      done
+```
+---
+
+![Gitlab pipelines](imgs/gitlab_pipelines.png)
+![Blue-green console](imgs/webconsole_bluegreen.png)
+
+
 ---
 #### Monitoring and Metrics
 ![BMO](imgs/BMO.png)
 
-Note:
-Prometheus: https://prometheus.cloud.vrutkovs.eu/
+---
 
-Grafana: https://grafana.cloud.vrutkovs.eu/
+![Hawkular metrics](imgs/hawkular.png)
+![Grafana](imgs/grafana.png)
 
 ---
 ### See you later, operator
@@ -132,7 +205,7 @@ Grafana: https://grafana.cloud.vrutkovs.eu/
 
 * **Vault Operator**
 
-  creates and configures Hashicopr's Vault cluster
+  creates and configures Hashicorp's Vault cluster
 
 * **MySQL Operator**
 
