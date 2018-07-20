@@ -28,8 +28,8 @@ Note:
 ---
 ### Openshift - batteries included
 * OAuth server for authentication
-* Container registry
 * HAProxy router
+* Container registry
 * CI/CD out-of-the-box via Jenkins Pipelines
 * Source2Image
 
@@ -63,8 +63,9 @@ To login as administrator:
 ```
 
 ---
+### Builds
 ### Source 2 Image
-### Builds, DeploymentConfigs
+### DeploymentConfigs
 ### Routes
 
 ---
@@ -72,12 +73,12 @@ To login as administrator:
 Look mom, no Dockerfile!
 
 ```shell
-oc login https://cloud.vrutkovs.eu -t ...
-oc new-project beer
-oc new-app  \
+$ oc login https://cloud.vrutkovs.eu -t ...
+$ oc new-project beer
+$ oc new-app  \
    --name=beer-demo \
    https://github.com/vrutkovs/openshift-demo
-oc expose svc/demo --host=demo.cloud.vrutkovs.eu
+$ oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 ```
 
 Setup a github webhook to trigger builds on new commits
@@ -92,24 +93,20 @@ Setup a github webhook to trigger builds on new commits
 Dockerfile + route settings in YAML
 
 ```shell
-oc new-project beer-custom
-oc new-app --name=beer-custom \
+$ oc new-project beer-custom
+$ oc new-app --name=beer-custom \
    http://github.com/vrutkovs/openshift-demo#custom-dockerfile
-oc create -f route.yaml
+$ oc create -f route.yaml
 ```
 
 ---
-### Jenkins Pipelines
-
----
+### CI/CD with Jenkins Pipelines
 
 ```shell
-oc new-project pipelines
-oc new-app --name=jenkins-pipeline \
+$ oc new-project pipelines
+$ oc new-app --name=jenkins-pipeline \
    http://github.com/vrutkovs/openshift-demo#jenkins
 ```
-
-![Build logs](imgs/jenkins_pipeline.png)
 
 ---
 ```groovy
@@ -129,15 +126,20 @@ stage("Smoketest") {
 }
 
 stage("Deploy to tested") {
-  openshiftCOLOR
-    srcStream: "pipeline-app", srcCOLOR: 'latest',
+  openshiftTag
+    srcStream: "pipeline-app", srcTag: 'latest',
     destinationStream: "pipeline-app",
-    destinationCOLOR: "smoketested"
+    destinationTag: "smoketested"
   openshiftDeploy deploymentConfig: "pipeline-app-tested"
 }
 ```
 ---
-### Gitlab CI
+
+![Web Console](imgs/web_console_jenkins_pipeline.png)
+![Blue Ocean](imgs/blue_ocean_jenkins_pipeline.png)
+
+---
+### CI/CD with Gitlab CI
 ### Blue-green deployment
 ---
 ```yaml
@@ -153,18 +155,18 @@ before_script:
       export COLOR="green" ALTCOLOR="blue"
     fi
   - export COLORHOST="$COLOR.blue-green.svc"
-
+```
+---
+```yaml
 build:
   stage: build
   script:
     - oc start-build blue-green --wait
-```
----
-```yaml
+
 deploy:
   stage: deploy
   script:
-    - oc COLOR blue-green:latest blue-green:${COLOR}
+    - oc tag blue-green:latest blue-green:${COLOR}
     - oc rollout latest dc/${COLOR}
     - oc rollout status dc/${COLOR} -w
 
@@ -173,14 +175,17 @@ autotest:
   script:
     - curl -kLs http://${COLORHOST}:8080/ | tee | grep 'Anonymous'
     - curl -kLs http://${COLORHOST}:8080/beer | tee | grep 'beer'
+```
+---
 
+```yaml
 canary:
   stage: canary
   script:
     - for i in `seq 10 10 100`; do
         oc set route-backends prod-route \
            ${COLOR}=$i ${ALTCOLOR}=$((100-i))
-        && sleep 3;
+        && sleep $PAUSE;
       done
 ```
 ---
