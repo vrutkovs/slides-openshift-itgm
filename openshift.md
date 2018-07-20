@@ -63,30 +63,6 @@ To login as administrator:
 ```
 
 ---
-Install using Ansible
-
-https://docs.openshift.org/latest/install_config/
-
-Openshift Online
-
-https://manage.openshift.com/
-
-Openshift Dedicated
-
-https://www.openshift.com/dedicated/
-
-Cloud IDE
-
-https://openshift.io
-
-Note:
-
-* openshift-ansible to install on any infrastructure
-* Online to try-before-you-buy
-* Dedicated - managed by Red Hat on AWS
-* openshift.io to develop Java microservices online using Eclipse Che
-
----
 # Demo
 ### Source 2 Image
 ### Builds, DeploymentConfigs
@@ -180,7 +156,7 @@ Operators take care of running complicated apps, e.g. databases
 
   provision additional nodes
 * **Chargeback**
- 
+
   reports AWS billing, node utilization etc.
 
 Note:
@@ -189,6 +165,29 @@ Note:
 * autoscaler adds more machines to cluster if pods don't have place to fit
 * chargeback find less utilized nodes and may calculate cloud-provider bills
 
+---
+Install using Ansible
+
+https://docs.openshift.org/latest/install_config/
+
+Openshift Online
+
+https://manage.openshift.com/
+
+Openshift Dedicated
+
+https://www.openshift.com/dedicated/
+
+Cloud IDE
+
+https://openshift.io
+
+Note:
+
+* openshift-ansible to install on any infrastructure
+* Online to try-before-you-buy
+* Dedicated - managed by Red Hat on AWS
+* openshift.io to develop Java microservices online using Eclipse Che
 ---
 ![shifty](imgs/get_shifty.jpg)
 
