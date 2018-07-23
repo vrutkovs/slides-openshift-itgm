@@ -166,70 +166,20 @@ stage("Deploy to tested") {
 ![Blue Ocean](imgs/blue_ocean_jenkins_pipeline.png)
 
 ---
-### CI/CD with Gitlab CI
-### Blue-green deployment
----
-```yaml
-before_script:
-  - oc login --insecure-skip-tls-verify=true
-      kubernetes.default.svc --token=$OPENSHIFT_TOKEN
-  - oc project blue-green
-  - export COLOR="blue" ALTCOLOR="green"
-  - export ACTIVE=$(
-      oc get route prod-route -o
-      jsonpath='{ .spec.to.name }' --loglevel=4)
-  - if [ $ACTIVE == "blue" ]; then
-      export COLOR="green" ALTCOLOR="blue"
-    fi
-  - export COLORHOST="$COLOR.blue-green.svc"
-```
----
-```yaml
-build:
-  stage: build
-  script:
-    - oc start-build blue-green --wait
-
-deploy:
-  stage: deploy
-  script:
-    - oc tag blue-green:latest blue-green:${COLOR}
-    - oc rollout latest dc/${COLOR}
-    - oc rollout status dc/${COLOR} -w
-
-autotest:
-  stage: autotest
-  script:
-    - curl -kLs http://${COLORHOST}:8080/ | tee | grep 'Anonymous'
-    - curl -kLs http://${COLORHOST}:8080/beer | tee | grep 'beer'
-```
----
-
-```yaml
-canary:
-  stage: canary
-  script:
-    - for i in `seq 10 10 100`; do
-        oc set route-backends prod-route \
-           ${COLOR}=$i ${ALTCOLOR}=$((100-i))
-        && sleep $PAUSE;
-      done
-```
----
-
-![Gitlab pipelines](imgs/gitlab_pipelines.png)
-![Blue-green console](imgs/webconsole_bluegreen.png)
-
-
----
 #### Monitoring and Metrics
 ![BMO](imgs/BMO.png)
 
 ---
 
 ![Hawkular metrics](imgs/hawkular.png)
-![Grafana](imgs/grafana.png)
+
+---
+
 ![Container logs](imgs/kibana.png)
+
+---
+
+![Grafana](imgs/grafana.png)
 
 ---
 ### See you later, operator
