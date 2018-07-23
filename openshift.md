@@ -109,7 +109,7 @@ Pushed 6/6 layers, 100% complete
 Push successful
 ```
 ---
-
+#### Web Console
 ![Web Console](imgs/web_console.png)
 
 ---
@@ -158,11 +158,10 @@ stage("Deploy to tested") {
 }
 ```
 ---
-
 ![Web Console](imgs/web_console_jenkins_pipeline.png)
 
 ---
-
+#### Jenkins Pipeline view
 ![Blue Ocean](imgs/blue_ocean_jenkins_pipeline.png)
 
 ---
@@ -174,11 +173,11 @@ stage("Deploy to tested") {
 ![Hawkular metrics](imgs/hawkular.png)
 
 ---
-
+#### ELK stack to store container logs
 ![Container logs](imgs/kibana.png)
 
 ---
-
+#### Prometheus + Grafana stack for metrics
 ![Grafana](imgs/grafana.png)
 
 ---
@@ -234,7 +233,7 @@ Openshift Dedicated
 
 https://www.openshift.com/dedicated/
 
-Cloud IDE
+Cloud IDE w/ Eclipse Che
 
 https://openshift.io
 
