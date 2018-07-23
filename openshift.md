@@ -84,9 +84,33 @@ $ oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 Setup a github webhook to trigger builds on new commits
 
 ---
+#### Build log
+```
+Cloning "https://github.com/vrutkovs/openshift-demo" ...
+	Commit:	b74070426bbba32ba085846804b8b6b909880eeb (Simplify runme.sh)
+	Author:	Vadim Rutkovsky <vrutkovs@redhat.com>
+	Date:	Fri May 4 23:37:38 2018 +0200
+--> Installing application source ...
+--> Installing dependencies ...
+Collecting aiohttp==2.3.10 (from -r requirements.txt (line 1))
+Downloading https://files.pythonhosted.org/packages/7e/af/b2c6b5939e390e29c5a12e74a344bbc56fc866e3b68c05a7d7737e9006d7/aiohttp-2.3.10-cp36-cp36m-manylinux1_x86_64.whl  (663kB)
+Collecting yarl>=1.0.0 (from aiohttp==2.3.10->-r requirements.txt (line 1))
+Downloading https://files.pythonhosted.org/packages/61/67/df71b367680e06bb4127e3df6189826d4b9daebf83c3bd5b9341c99ef528/yarl-1.2.6-cp36-cp36m-manylinux1_x86_64.whl  (253kB)
+...
+Installing collected packages: idna, multidict, yarl, idna-ssl, chardet, async-timeout, aiohttp
+Running setup.py install for idna-ssl: started
+Running setup.py install for idna-ssl: finished with status 'done'
+Successfully installed aiohttp-2.3.10 async-timeout-3.0.0 chardet-3.0.4 idna-2.7 idna-ssl-1.1.0 multidict-4.3.1 yarl-1.2.6
 
-![Web Console](imgs/build_logs.png)
-![Build logs](imgs/web_console.png)
+Pushing image 172.30.16.196:5000/beer/beer-demo:latest ...
+Pushed 0/6 layers, 3% complete
+...
+Pushed 6/6 layers, 100% complete
+Push successful
+```
+---
+
+![Web Console](imgs/web_console.png)
 
 ---
 
@@ -136,6 +160,9 @@ stage("Deploy to tested") {
 ---
 
 ![Web Console](imgs/web_console_jenkins_pipeline.png)
+
+---
+
 ![Blue Ocean](imgs/blue_ocean_jenkins_pipeline.png)
 
 ---
@@ -202,6 +229,7 @@ canary:
 
 ![Hawkular metrics](imgs/hawkular.png)
 ![Grafana](imgs/grafana.png)
+![Container logs](imgs/kibana.png)
 
 ---
 ### See you later, operator
