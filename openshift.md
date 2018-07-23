@@ -9,6 +9,7 @@ vrutkovs@redhat.com
 ![Cat pic](imgs/cat.png)
 
 Note:
+* Heroku-style deployment - git repo -> working app
 * Enterprise Kubernetes, developer-focused
 * Forked from Kubernetes codebase, regularly synced with upstream (3 month delay)
 * Origin - upstream version, Openshift Container Platform - enterprise version
@@ -163,6 +164,10 @@ stage("Deploy to tested") {
 ---
 #### Jenkins Pipeline view
 ![Blue Ocean](imgs/blue_ocean_jenkins_pipeline.png)
+
+Note:
+
+Mention Gitlab CI - use `oc` CLI
 
 ---
 #### Monitoring and Metrics
