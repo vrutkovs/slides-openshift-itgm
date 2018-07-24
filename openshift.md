@@ -174,7 +174,7 @@ Mention Gitlab CI - use `oc` CLI
 ![BMO](imgs/BMO.png)
 
 ---
-
+##### Hawkular metrics
 ![Hawkular metrics](imgs/hawkular.png)
 
 ---
@@ -183,7 +183,7 @@ Mention Gitlab CI - use `oc` CLI
 
 ---
 #### Prometheus + Grafana stack for metrics
-![Grafana](imgs/grafana.png)
+![Grafana and Prometheus](imgs/grafana.png)
 
 ---
 ### See you later, operator
