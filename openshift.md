@@ -6,6 +6,23 @@ Vadim Rutkovsky
 vrutkovs@redhat.com
 
 ---
+
+### Developer's ideal workflow
+
+```python
+10 git commit
+20 git push
+30 ???
+40 Ask manager for a raise
+50 GOTO 10
+```
+
+Note:
+Openshift v2 - 2011-2016
+
+Openshift v3 - 2015 - ...
+
+---
 ![Cat pic](imgs/cat.png)
 
 Note:
