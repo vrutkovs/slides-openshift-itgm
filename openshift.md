@@ -205,7 +205,7 @@ Mention Gitlab CI - use `oc` CLI
 ---
 ### See you later, operator
 
-**Operators** - k8s-aware application, which communicate using CRDS (custom resource definitions) and perform actions in the cluster
+**Operators** - k8s-aware application, which communicate using CRDs (custom resource definitions) and perform actions in the cluster
 
 * **Vault Operator**
 
