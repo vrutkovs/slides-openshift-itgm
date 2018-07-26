@@ -195,7 +195,7 @@ Mention Gitlab CI - use `oc` CLI
 ![Hawkular metrics](imgs/hawkular.png)
 
 ---
-#### ELK stack to store container logs
+#### EFK stack to store container logs
 ![Container logs](imgs/kibana.png)
 
 ---
