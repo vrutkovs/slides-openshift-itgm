@@ -225,13 +225,14 @@ Operators take care of running complicated apps, e.g. databases
 
   scales deployments based on custom app metrics
 
+* **Autoscaler**                                                                
+                                                                                
+  provision additional nodes 
+
 * **Node Problem Detector**
 
   uses Prometheus metric to disable faulty nodes
 
-* **Autoscaler**
-
-  provision additional nodes
 * **Chargeback**
 
   reports AWS billing, node utilization etc.
