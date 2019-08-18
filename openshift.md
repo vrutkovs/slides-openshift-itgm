@@ -22,15 +22,16 @@ Openshift v2 - 2011-2016
 
 Openshift v3 - 2015 - ...
 
+Openshift v4 - Jun 4 2019 - ...
+
 ---
 ![Cat pic](imgs/cat.png)
 
 Note:
 * Heroku-style deployment - git repo -> working app
 * Enterprise Kubernetes, developer-focused
-* Forked from Kubernetes codebase, regularly synced with upstream (3 month delay)
-* Origin - upstream version, Openshift Container Platform - enterprise version
-* OCP versions are supported for 2 years
+* Operator-based distribution
+* OKD - community-supported version, Openshift Container Platform - enterprise version
 * Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
 
 ---
@@ -59,26 +60,15 @@ Note:
 * Devs don't require low-level Docker knowledge with S2I
 
 ---
-### Getting Started
+### Installer
 
-`oc` - openshift's `kubectl`
-
-Setting up the local containerized cluster:
-```shell
-$ sudo oc cluster up
-Starting OpenShift using openshift/origin:v3.9.0 ...
-OpenShift server started.
-
-The server is accessible via web console at:
-    https://127.0.0.1:8443
-
-You are logged in as:
-    User:     developer
-    Password: <any value>
-
-To login as administrator:
-    oc login -u system:admin
 ```
+
+```
+
+Notes:
+
+TODO add an installer output
 
 ---
 ### Builds
@@ -92,9 +82,9 @@ Look mom, no Dockerfile!
 
 ```shell
 $ oc login https://cloud.vrutkovs.eu -t ...
-$ oc new-project beer
+$ oc new-project lvee
 $ oc new-app  \
-   --name=beer-demo \
+   --name=lvee-demo \
    https://github.com/vrutkovs/openshift-demo
 $ oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 ```
@@ -120,7 +110,7 @@ Running setup.py install for idna-ssl: started
 Running setup.py install for idna-ssl: finished with status 'done'
 Successfully installed aiohttp-2.3.10 async-timeout-3.0.0 chardet-3.0.4 idna-2.7 idna-ssl-1.1.0 multidict-4.3.1 yarl-1.2.6
 
-Pushing image 172.30.16.196:5000/beer/beer-demo:latest ...
+Pushing image 172.30.16.196:5000/lvee/lvee-demo:latest ...
 Pushed 0/6 layers, 3% complete
 ...
 Pushed 6/6 layers, 100% complete
@@ -190,13 +180,9 @@ Mention Gitlab CI - use `oc` CLI
 #### Monitoring and Metrics
 ![BMO](imgs/BMO.png)
 
----
-##### Hawkular metrics
-![Hawkular metrics](imgs/hawkular.png)
+Note:
 
----
-#### EFK stack to store container logs
-![Container logs](imgs/kibana.png)
+TODO: Show alerts in the webconsole
 
 ---
 #### Prometheus + Grafana stack for metrics
@@ -220,14 +206,31 @@ Cloud-native apps - the apps which are aware of running in k8s and can react to 
 Operators take care of running complicated apps, e.g. databases
 
 ---
-#### Openshift operators
-* **Openshift Metrics Server**
+#### Everything is operated
 
-  scales deployments based on custom app metrics
+* Placing files on host -> update MachineConfig, MachineConfigOperator puts file on the host,
+  creates a new ostree deployment and reboots hosts one by one to have it applied
 
-* **Autoscaler**                                                                
-                                                                                
-  provision additional nodes 
+* Some pods are in Pending and cannot be scheduled. MachineAutoscaler updates `replicas` for 
+  MachineSet, a new Machine is created. Using MachineConfigSet configuration a host is provisioned,
+  it automatically joins the cluster, Node object is created and pods are placed on the new machine.
+
+---
+#### Operated Operating System
+
+* RHEL Core OS - ContainerLinux + RHEL. Ignition to declaratively configure the system,
+  ostree to make use of read-only root and atomic transactions and MachineConfigDaemon to apply
+  changes to the filesystem
+* RHCOS is RHEL8, designed to run as OpenShift node.
+* Community counterpart - Fedora CoreOS
+* RHCOS release cycle is bound to OpenShift, not RHEL 8
+
+---
+#### Additional openshift operators
+
+* **Persistent Logging**
+  
+  creates ElasticSearch cluster, configures Kibana and FluentD to store and analyze container logs
 
 * **Node Problem Detector**
 
@@ -238,15 +241,13 @@ Operators take care of running complicated apps, e.g. databases
   reports AWS billing, node utilization etc.
 
 Note:
-* metrics server scales your apps with demand
-* problem detector finds and isolates problemtic nodes
 * autoscaler adds more machines to cluster if pods don't have place to fit
 * chargeback find less utilized nodes and may calculate cloud-provider bills
 
 ---
-Install using Ansible
+Give it a try
 
-https://docs.openshift.org/latest/install_config/
+https://try.openshift.com
 
 Openshift Online
 
