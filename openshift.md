@@ -60,17 +60,6 @@ Note:
 * Devs don't require low-level Docker knowledge with S2I
 
 ---
-### Installer
-
-```
-
-```
-
-Notes:
-
-TODO add an installer output
-
----
 ### Builds
 ### Source 2 Image
 ### DeploymentConfigs
@@ -214,6 +203,9 @@ Operators take care of running complicated apps, e.g. databases
 * Some pods are in Pending and cannot be scheduled. MachineAutoscaler updates `replicas` for 
   MachineSet, a new Machine is created. Using MachineConfigSet configuration a host is provisioned,
   it automatically joins the cluster, Node object is created and pods are placed on the new machine.
+
+* Upgrading a cluster is essentially updating all the operators. Upgrade can safely be stopped 
+  or reverted as long as API server is running.
 
 ---
 #### Operated Operating System
