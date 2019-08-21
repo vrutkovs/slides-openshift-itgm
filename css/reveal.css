@@ -844,22 +844,3 @@ body {
     height: 66.6666666667%; }
   .reveal .speaker-notes {
     font-size: 14px; } }
-
-/*********************************************
- * ZOOM PLUGIN
- *********************************************/
-.zoomed .reveal *,
-.zoomed .reveal *:before,
-.zoomed .reveal *:after {
-  -webkit-backface-visibility: visible !important;
-          backface-visibility: visible !important; }
-
-.zoomed .reveal .progress,
-.zoomed .reveal .controls {
-  opacity: 0; }
-
-.zoomed .reveal .roll span {
-  background: none; }
-
-.zoomed .reveal .roll span:after {
-  visibility: hidden; }
