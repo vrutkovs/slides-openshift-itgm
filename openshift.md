@@ -5,12 +5,12 @@ Vadim Rutkovsky
 
 ---
 
-### Developer's ideal workflow
+### DevOps 101
 
 ```python
 10 git commit
 20 git push
-30 ???
+30 some ops magic
 40 Ask manager for a raise
 50 GOTO 10
 ```
