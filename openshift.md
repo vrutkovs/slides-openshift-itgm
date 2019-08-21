@@ -1,9 +1,7 @@
 # Openshift
 ### Kubernetes with a human face
-
 Vadim Rutkovsky
-
-vrutkovs@redhat.com
+##### vrutkovs@redhat.com
 
 ---
 
@@ -46,11 +44,11 @@ Note:
 
 ---
 ### Openshift - batteries included
-* OAuth server for authentication
-* HAProxy router
-* Container registry
-* CI/CD out-of-the-box via Jenkins Pipelines
-* Source2Image
+- Internal OAuth server for authentication
+- HAProxy router
+- Container registry
+- CI/CD via Jenkins Pipelines
+- Source2Image
 
 ![Professor Fortran](imgs/fortran.png)
 
@@ -79,6 +77,10 @@ $ oc expose svc/demo --host=demo.cloud.vrutkovs.eu
 ```
 
 Setup a github webhook to trigger builds on new commits
+
+Notes:
+
+TODO: Use carbon js for screenshots
 
 ---
 #### Build log
@@ -114,8 +116,8 @@ Push successful
 Dockerfile + route settings in YAML
 
 ```shell
-$ oc new-project beer-custom
-$ oc new-app --name=beer-custom \
+$ oc new-project lvee-custom
+$ oc new-app --name=lvee-custom \
    http://github.com/vrutkovs/openshift-demo#custom-dockerfile
 $ oc create -f route.yaml
 ```
@@ -174,7 +176,7 @@ Note:
 TODO: Show alerts in the webconsole
 
 ---
-#### Prometheus + Grafana stack for metrics
+### Prometheus + Grafana stack for metrics
 ![Grafana and Prometheus](imgs/grafana.png)
 
 ---
@@ -182,62 +184,60 @@ TODO: Show alerts in the webconsole
 
 **Operators** - k8s-aware application, which communicate using CRDs (custom resource definitions) and perform actions in the cluster
 
-* **Vault Operator**
+- **Vault Operator** creates and configures Hashicorp's Vault cluster
 
-  creates and configures Hashicorp's Vault cluster
-
-* **MySQL Operator**
-
-  creates, scales and backs up MySQL containers in kubernetes
+- **MySQL Operator** creates, scales and backs up MySQL containers in kubernetes
 
 Note:
 Cloud-native apps - the apps which are aware of running in k8s and can react to k8s events
 Operators take care of running complicated apps, e.g. databases
 
 ---
-#### Everything is operated
+### MachineConfig operator
 
-* Placing files on host -> update MachineConfig, MachineConfigOperator puts file on the host,
-  creates a new ostree deployment and reboots hosts one by one to have it applied
+**MachineConfig** - custom object, which contains a list of encoded files and systemd units
 
-* Some pods are in Pending and cannot be scheduled. MachineAutoscaler updates `replicas` for 
-  MachineSet, a new Machine is created. Using MachineConfigSet configuration a host is provisioned,
-  it automatically joins the cluster, Node object is created and pods are placed on the new machine.
+- <!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigSet**s, assigned to a node group
 
-* Upgrading a cluster is essentially updating all the operators. Upgrade can safely be stopped 
-  or reverted as long as API server is running.
+- <!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
 
 ---
-#### Operated Operating System
+### Machine API
 
-* RHEL Core OS - ContainerLinux + RHEL. Ignition to declaratively configure the system,
-  ostree to make use of read-only root and atomic transactions and MachineConfigDaemon to apply
-  changes to the filesystem
-* RHCOS is RHEL8, designed to run as OpenShift node.
-* Community counterpart - Fedora CoreOS
-* RHCOS release cycle is bound to OpenShift, not RHEL 8
+When running in the known cloud Machine API Operator can provision additional nodes
 
----
-#### Additional openshift operators
+- <!-- .element: class="fragment" data-fragment-index="1" --> Additional entities - **Machine** and **MachineSet** - is introduced to keep the info about desired node configs and quantity
 
-* **Persistent Logging**
-  
-  creates ElasticSearch cluster, configures Kibana and FluentD to store and analyze container logs
-
-* **Node Problem Detector**
-
-  uses Prometheus metric to disable faulty nodes
-
-* **Chargeback**
-
-  reports AWS billing, node utilization etc.
-
-Note:
-* autoscaler adds more machines to cluster if pods don't have place to fit
-* chargeback find less utilized nodes and may calculate cloud-provider bills
+- <!-- .element: class="fragment" data-fragment-index="2" --> MachineSet can be scaled, additional Machines are created via cloud API. The Machine gets provisioned by MachineConfigOperator and joins the cluster as a node
 
 ---
-Give it a try
+### Operated Operating System
+
+* RHEL Core OS = ContainerLinux ideas + RHEL packages
+* **Ignition** to declaratively configure the system,
+  **ostree** to make use of read-only root and atomic transactions,
+  **MachineConfigOperator** to control the node via cluster
+
+---
+### Red Hat CoreOS
+RHCOS is RHEL8, designed to run as OpenShift node. Community counterpart - **Fedora CoreOS**
+
+
+RHCOS release cycle is bound to OpenShift, not RHEL
+
+---
+### Operator benefits
+
+- <!-- .element: class="fragment" data-fragment-index="1" --> Install payload - an image with references to ~25 operators
+
+- <!-- .element: class="fragment" data-fragment-index="2" --> Upgrading a cluster is essentially updating all the operators
+
+- <!-- .element: class="fragment" data-fragment-index="3" --> Operator sum up component's status
+
+- <!-- .element: class="fragment" data-fragment-index="4" --> Cluster config = sum of operator configs (GitOps)
+
+---
+### Give it a try
 
 https://try.openshift.com
 
@@ -249,13 +249,8 @@ Openshift Dedicated
 
 https://www.openshift.com/dedicated/
 
-Cloud IDE w/ Eclipse Che
-
-https://openshift.io
-
 Note:
 
-* openshift-ansible to install on any infrastructure
 * Online to try-before-you-buy
 * Dedicated - managed by Red Hat on AWS
 * openshift.io to develop Java microservices online using Eclipse Che
@@ -264,4 +259,4 @@ Note:
 
 https://vrutkovs.github.io/slides-openshift-k8s-human-face/
 
-*<!-- -->* vrutkovs  <!-- .element: class="fab fa-twitter-square" --> *<!-- -->* vrutkovs@redhat.com  <!-- .element: class="fas fa-envelope-square" -->
+https://vrutkovs.eu
