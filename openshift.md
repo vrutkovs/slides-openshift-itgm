@@ -166,7 +166,7 @@ https://operatorhub.io
 ---
 ### OpenShift-specific operator - Machine API
 
-When running in the known cloud Machine API Operator can provision additional nodes
+Machine API Operator takes care of additional nodes provisioning
 
 <!-- .element: class="fragment" data-fragment-index="1" --> Additional entities - **Machine** and **MachineSet** - is introduced to keep the info about desired node configs and quantity
 
