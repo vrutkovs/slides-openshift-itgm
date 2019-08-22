@@ -167,13 +167,11 @@ When running in the known cloud Machine API Operator can provision additional no
 ---
 ### Operated Operating System
 
-<!-- .element: class="fragment" data-fragment-index="1" -->**MachineConfigOperator** to control the node via cluster
+<!-- .element: class="fragment" data-fragment-index="1" -->**Ignition** to declaratively configure the system
 
-<!-- .element: class="fragment" data-fragment-index="2" -->**Ignition** to declaratively configure the system
+<!-- .element: class="fragment" data-fragment-index="2" -->**ostree** to make use of read-only root and atomic transactions
 
-<!-- .element: class="fragment" data-fragment-index="3" -->**ostree** to make use of read-only root and atomic transactions
-
-<!-- .element: class="fragment" data-fragment-index="4" -->**RHEL Core OS** = ContainerLinux ideas + RHEL packages
+<!-- .element: class="fragment" data-fragment-index="3" -->**RHEL Core OS** = ContainerLinux ideas + RHEL packages
 
 ---
 ### Red Hat CoreOS
