@@ -14,26 +14,11 @@ Note:
 * Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
 
 ---
-### What's in the box?
-![openshift](imgs/openshift.png)
-
----
-### DevOps 101
-
-```python
-10 git commit
-20 git push
-30 some ops magic
-40 Ask manager for a raise
-50 GOTO 10
-```
----
 ### Openshift - batteries included
 - Internal OAuth server for authentication
-- HAProxy router
-- Container registry
+- Internal container registry
+- ImageStreams + BuildConfigs + DeploymentConfigs
 - CI/CD via Jenkins Pipelines
-- Source2Image
 
 ![Professor Fortran](imgs/fortran.png)
 
@@ -43,15 +28,17 @@ Note:
 * Devs don't require low-level Docker knowledge with S2I
 
 ---
-### Kubernetes++
-#### Source 2 Image
-#### Builds
-#### DeploymentConfigs
-#### Routes
+### DevOps 101
+
+```python
+10 git commit
+20 git push
+30 ??? some ops magic ???
+40 GOTO 10
+```
 
 ---
-
-Look mom, no Dockerfile!
+#### Look mom, no Dockerfile!
 
 ![Run in 3 commands](imgs/new-project.svg)
 
@@ -141,7 +128,7 @@ Note:
 TODO: Show alerts in the webconsole
 
 ---
-### Prometheus + Grafana stack for metrics
+### Prometheus + Grafana
 ![Grafana and Prometheus](imgs/grafana.png)
 
 ---
@@ -150,9 +137,10 @@ TODO: Show alerts in the webconsole
 **Operators** - k8s-aware application, which communicate using CRDs (custom resource definitions) and perform actions in the cluster
 
 Examples:
-- **Vault Operator** creates and configures Hashicorp's Vault cluster
 
-- **MySQL Operator** creates, scales and backs up MySQL containers in kubernetes
+<!-- .element: class="fragment" data-fragment-index="1" -->**Vault Operator** by Hachicorp creates and configures Hashicorp's Vault cluster
+
+<!-- .element: class="fragment" data-fragment-index="2" -->**Vitesse Operator** creates, scales and backs up MySQL containers in kubernetes
 
 Note:
 Cloud-native apps - the apps which are aware of running in k8s and can react to k8s events
@@ -179,10 +167,13 @@ When running in the known cloud Machine API Operator can provision additional no
 ---
 ### Operated Operating System
 
-<!-- .element: class="fragment" data-fragment-index="2" -->RHEL Core OS = ContainerLinux ideas + RHEL packages
-<!-- .element: class="fragment" data-fragment-index="2" -->**Ignition** to declaratively configure the system,
-  **ostree** to make use of read-only root and atomic transactions,
-  **MachineConfigOperator** to control the node via cluster
+<!-- .element: class="fragment" data-fragment-index="1" -->**MachineConfigOperator** to control the node via cluster
+
+<!-- .element: class="fragment" data-fragment-index="2" -->**Ignition** to declaratively configure the system
+
+<!-- .element: class="fragment" data-fragment-index="3" -->**ostree** to make use of read-only root and atomic transactions
+
+<!-- .element: class="fragment" data-fragment-index="4" -->**RHEL Core OS** = ContainerLinux ideas + RHEL packages
 
 ---
 ### Red Hat CoreOS
@@ -190,6 +181,13 @@ RHCOS is RHEL8, designed to run as OpenShift node. Community counterpart - **Fed
 
 
 RHCOS release cycle is bound to OpenShift, not RHEL
+
+---
+### 3rd Party Operators
+
+https://operatorhub.io - a collection of operators
+
+<!-- .element: class="fragment" data-fragment-index="1" -->**Operator Lifecycle Manager** takes care of operator provisioning, update and configuration
 
 ---
 ### Operator benefits
