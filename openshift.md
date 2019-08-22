@@ -134,9 +134,7 @@ TODO: Show alerts in the webconsole
 ---
 ### See you later, operator
 
-**Operators** - k8s-aware application, which communicate using CRDs (custom resource definitions) and perform actions in the cluster
-
-Examples:
+**Operators** - k8s pattern, application connects to k8s API server, uses CRDs to create k8s objects and may actively watch them
 
 <!-- .element: class="fragment" data-fragment-index="1" -->**Prometheus Operator** maintains and configures Prometheus cluster
 
@@ -161,7 +159,7 @@ https://operatorhub.io
 
 <!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigPool**s, assigned to a node group
 
-<!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
+<!-- .element: class="fragment" data-fragment-index="2" --> MachineConfigOperator runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
 
 ---
 ### OpenShift-specific operator - Machine API
