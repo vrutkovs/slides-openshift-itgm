@@ -45,7 +45,7 @@ Note:
 Setup a github webhook to trigger builds on new commits
 
 ---
-#### Build log
+##### Build log
 ```
 Cloning "https://github.com/vrutkovs/openshift-demo" ...
 	Commit:	b74070426bbba32ba085846804b8b6b909880eeb (Simplify runme.sh)
@@ -75,23 +75,23 @@ Push successful
 
 ---
 
-Dockerfile + route settings in YAML
+#### Dockerfile + route settings in YAML
 
 ![Web Console](imgs/custom-project.svg)
 ---
-### CI/CD with Jenkins Pipelines
+#### CI/CD with Jenkins Pipelines
 
 ![Pipelines](imgs/build-pipelines.svg)
 
 ---
 ```groovy
 stage("Build") {
-    openshiftBuild
-      buildConfig: "pipeline-app", showBuildLogs: "true"
+  openshiftBuild
+    buildConfig: "pipeline-app", showBuildLogs: "true"
 }
 
 stage("Deploy to dev") {
-    openshiftDeploy deploymentConfig: "pipeline-app"
+  openshiftDeploy deploymentConfig: "pipeline-app"
 }
 
 stage("Smoketest") {
