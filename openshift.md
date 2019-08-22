@@ -147,7 +147,15 @@ Cloud-native apps - the apps which are aware of running in k8s and can react to 
 Operators take care of running complicated apps, e.g. databases
 
 ---
-### MachineConfig operator
+### Where Do I Find Operators?
+
+https://operatorhub.io
+
+<!-- .element: class="fragment" data-fragment-index="1" -->**Operator Lifecycle Manager** takes care of operator provisioning, update and configuration
+
+
+---
+### OpenShift-specific operator - MachineConfig
 
 **MachineConfig** - custom object, which contains a list of encoded files and systemd units
 
@@ -156,47 +164,41 @@ Operators take care of running complicated apps, e.g. databases
 <!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
 
 ---
-### Machine API
+### OpenShift-specific operator - Machine API
 
 When running in the known cloud Machine API Operator can provision additional nodes
 
 <!-- .element: class="fragment" data-fragment-index="1" --> Additional entities - **Machine** and **MachineSet** - is introduced to keep the info about desired node configs and quantity
 
-<!-- .element: class="fragment" data-fragment-index="2" --> MachineSet can be scaled, additional Machines are created via cloud API. The Machine gets provisioned by MachineConfigOperator and joins the cluster as a node
+<!-- .element: class="fragment" data-fragment-index="2" --> MachineSet can be scaled, creating a new Machine instance. A new Machine joins the cluster via TLS bootstrapping
+---
+### Operator benefits
+
+*<!-- .element: class="fragment" data-fragment-index="1" --> One image to rule them all
+
+*<!-- .element: class="fragment" data-fragment-index="2" --> Cluster config = sum of operator configs (GitOps)
+
+*<!-- .element: class="fragment" data-fragment-index="3" --> Operator status -> cluster health status
+
+*<!-- .element: class="fragment" data-fragment-index="4" --> Upgrading a cluster is essentially updating every operator
 
 ---
 ### Operated Operating System
+RHEL CoreOS is RHEL8, designed to run containers only. Community counterpart - **Fedora CoreOS**
+
+
+RHEL CoreOS release cycle is bound to OpenShift, not RHEL
+
+<!-- .element: class="fragment" data-fragment-index="1" -->**RHEL Core OS** = ContainerLinux ideas + RHEL packages
+
+---
+### RHEL CoreOS specifics
 
 <!-- .element: class="fragment" data-fragment-index="1" -->**Ignition** to declaratively configure the system
 
 <!-- .element: class="fragment" data-fragment-index="2" -->**ostree** to make use of read-only root and atomic transactions
 
-<!-- .element: class="fragment" data-fragment-index="3" -->**RHEL Core OS** = ContainerLinux ideas + RHEL packages
-
----
-### Red Hat CoreOS
-RHCOS is RHEL8, designed to run as OpenShift node. Community counterpart - **Fedora CoreOS**
-
-
-RHCOS release cycle is bound to OpenShift, not RHEL
-
----
-### 3rd Party Operators
-
-https://operatorhub.io - a collection of operators
-
-<!-- .element: class="fragment" data-fragment-index="1" -->**Operator Lifecycle Manager** takes care of operator provisioning, update and configuration
-
----
-### Operator benefits
-
-*<!-- .element: class="fragment" data-fragment-index="1" --> Install payload - an image with references to ~25 operators
-
-*<!-- .element: class="fragment" data-fragment-index="4" --> Cluster config = sum of operator configs (GitOps)
-
-*<!-- .element: class="fragment" data-fragment-index="2" --> Upgrading a cluster is essentially updating all the operators
-
-*<!-- .element: class="fragment" data-fragment-index="3" --> Operator sum up component's status
+<!-- .element: class="fragment" data-fragment-index="3" -->**MachineConfigDaemon** to apply updates and custom configs to existing instances
 
 ---
 ### Give it a try
@@ -207,9 +209,9 @@ Openshift Online
 
 https://manage.openshift.com/
 
-Openshift Dedicated
+Code Ready Containers - local OpenShift4
 
-https://www.openshift.com/dedicated/
+https://code-ready.github.io/crc/
 
 Note:
 
@@ -219,6 +221,6 @@ Note:
 ---
 ![shifty](imgs/get_shifty.jpg)
 
-https://vrutkovs.github.io/slides-openshift-k8s-human-face/
+Slides - https://vrutkovs.github.io/slides-openshift-k8s-human-face/
 
-https://vrutkovs.eu
+Contacts - https://vrutkovs.eu
