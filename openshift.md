@@ -138,7 +138,7 @@ TODO: Show alerts in the webconsole
 
 Examples:
 
-<!-- .element: class="fragment" data-fragment-index="1" -->**Vault Operator** by Hachicorp creates and configures Hashicorp's Vault cluster
+<!-- .element: class="fragment" data-fragment-index="1" -->**Prometheus Operator** maintains and configures Prometheus cluster
 
 <!-- .element: class="fragment" data-fragment-index="2" -->**Vitesse Operator** creates, scales and backs up MySQL containers in kubernetes
 
@@ -151,7 +151,7 @@ Operators take care of running complicated apps, e.g. databases
 
 **MachineConfig** - custom object, which contains a list of encoded files and systemd units
 
-<!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigSet**s, assigned to a node group
+<!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigPool**s, assigned to a node group
 
 <!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
 
