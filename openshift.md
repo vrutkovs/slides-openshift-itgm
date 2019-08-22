@@ -4,25 +4,6 @@ Vadim Rutkovsky
 ##### vrutkovs@redhat.com
 
 ---
-
-### DevOps 101
-
-```python
-10 git commit
-20 git push
-30 some ops magic
-40 Ask manager for a raise
-50 GOTO 10
-```
-
-Note:
-Openshift v2 - 2011-2016
-
-Openshift v3 - 2015 - ...
-
-Openshift v4 - Jun 4 2019 - ...
-
----
 ![Cat pic](imgs/cat.png)
 
 Note:
@@ -36,12 +17,16 @@ Note:
 ### What's in the box?
 ![openshift](imgs/openshift.png)
 
-Note:
-* Base layer - your cloud provider / VMs / bare-metal
-* OS with container runtime - Docker / CRI-O
-* SDN / Storage / core services
-* Developer services - CI/CD, Service Catalog, Web Console
+---
+### DevOps 101
 
+```python
+10 git commit
+20 git push
+30 some ops magic
+40 Ask manager for a raise
+50 GOTO 10
+```
 ---
 ### Openshift - batteries included
 - Internal OAuth server for authentication
@@ -58,29 +43,19 @@ Note:
 * Devs don't require low-level Docker knowledge with S2I
 
 ---
-### Builds
-### Source 2 Image
-### DeploymentConfigs
-### Routes
+### Kubernetes++
+#### Source 2 Image
+#### Builds
+#### DeploymentConfigs
+#### Routes
 
 ---
 
 Look mom, no Dockerfile!
 
-```shell
-$ oc login https://cloud.vrutkovs.eu -t ...
-$ oc new-project lvee
-$ oc new-app  \
-   --name=lvee-demo \
-   https://github.com/vrutkovs/openshift-demo
-$ oc expose svc/demo --host=demo.cloud.vrutkovs.eu
-```
+![Run in 3 commands](imgs/new-project.svg)
 
 Setup a github webhook to trigger builds on new commits
-
-Notes:
-
-TODO: Use carbon js for screenshots
 
 ---
 #### Build log
@@ -115,21 +90,11 @@ Push successful
 
 Dockerfile + route settings in YAML
 
-```shell
-$ oc new-project lvee-custom
-$ oc new-app --name=lvee-custom \
-   http://github.com/vrutkovs/openshift-demo#custom-dockerfile
-$ oc create -f route.yaml
-```
-
+![Web Console](imgs/custom-project.svg)
 ---
 ### CI/CD with Jenkins Pipelines
 
-```shell
-$ oc new-project pipelines
-$ oc new-app --name=jenkins-pipeline \
-   http://github.com/vrutkovs/openshift-demo#jenkins
-```
+![Pipelines](imgs/build-pipelines.svg)
 
 ---
 ```groovy
@@ -184,6 +149,7 @@ TODO: Show alerts in the webconsole
 
 **Operators** - k8s-aware application, which communicate using CRDs (custom resource definitions) and perform actions in the cluster
 
+Examples:
 - **Vault Operator** creates and configures Hashicorp's Vault cluster
 
 - **MySQL Operator** creates, scales and backs up MySQL containers in kubernetes
@@ -197,24 +163,24 @@ Operators take care of running complicated apps, e.g. databases
 
 **MachineConfig** - custom object, which contains a list of encoded files and systemd units
 
-- <!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigSet**s, assigned to a node group
+<!-- .element: class="fragment" data-fragment-index="1" --> MachineConfigs are assembled into **MachineConfigSet**s, assigned to a node group
 
-- <!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
+<!-- .element: class="fragment" data-fragment-index="2" --> **MachineConfigOperator** runs a daemon on the hosts and synchronises files and systemd unit state with the k8s object specification
 
 ---
 ### Machine API
 
 When running in the known cloud Machine API Operator can provision additional nodes
 
-- <!-- .element: class="fragment" data-fragment-index="1" --> Additional entities - **Machine** and **MachineSet** - is introduced to keep the info about desired node configs and quantity
+<!-- .element: class="fragment" data-fragment-index="1" --> Additional entities - **Machine** and **MachineSet** - is introduced to keep the info about desired node configs and quantity
 
-- <!-- .element: class="fragment" data-fragment-index="2" --> MachineSet can be scaled, additional Machines are created via cloud API. The Machine gets provisioned by MachineConfigOperator and joins the cluster as a node
+<!-- .element: class="fragment" data-fragment-index="2" --> MachineSet can be scaled, additional Machines are created via cloud API. The Machine gets provisioned by MachineConfigOperator and joins the cluster as a node
 
 ---
 ### Operated Operating System
 
-* RHEL Core OS = ContainerLinux ideas + RHEL packages
-* **Ignition** to declaratively configure the system,
+<!-- .element: class="fragment" data-fragment-index="2" -->RHEL Core OS = ContainerLinux ideas + RHEL packages
+<!-- .element: class="fragment" data-fragment-index="2" -->**Ignition** to declaratively configure the system,
   **ostree** to make use of read-only root and atomic transactions,
   **MachineConfigOperator** to control the node via cluster
 
@@ -228,13 +194,13 @@ RHCOS release cycle is bound to OpenShift, not RHEL
 ---
 ### Operator benefits
 
-- <!-- .element: class="fragment" data-fragment-index="1" --> Install payload - an image with references to ~25 operators
+*<!-- .element: class="fragment" data-fragment-index="1" --> Install payload - an image with references to ~25 operators
 
-- <!-- .element: class="fragment" data-fragment-index="2" --> Upgrading a cluster is essentially updating all the operators
+*<!-- .element: class="fragment" data-fragment-index="4" --> Cluster config = sum of operator configs (GitOps)
 
-- <!-- .element: class="fragment" data-fragment-index="3" --> Operator sum up component's status
+*<!-- .element: class="fragment" data-fragment-index="2" --> Upgrading a cluster is essentially updating all the operators
 
-- <!-- .element: class="fragment" data-fragment-index="4" --> Cluster config = sum of operator configs (GitOps)
+*<!-- .element: class="fragment" data-fragment-index="3" --> Operator sum up component's status
 
 ---
 ### Give it a try
