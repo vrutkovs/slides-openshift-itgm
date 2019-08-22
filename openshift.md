@@ -89,7 +89,6 @@ stage("Build") {
   openshiftBuild
     buildConfig: "pipeline-app", showBuildLogs: "true"
 }
-
 stage("Deploy to dev") {
   openshiftDeploy deploymentConfig: "pipeline-app"
 }
@@ -100,12 +99,13 @@ stage("Smoketest") {
       grep 'Hello, Minsk'"
 }
 
-stage("Deploy to tested") {
+stage("Deploy to staging") {
   openshiftTag
-    srcStream: "pipeline-app", srcTag: 'latest',
-    destinationStream: "pipeline-app",
-    destinationTag: "smoketested"
-  openshiftDeploy deploymentConfig: "pipeline-app-tested"
+    srcStream: "pipeline-app", srcTag: "latest",
+    destinationStream: "pipeline-app", destinationTag: "staging"
+  openshiftDeploy
+    deploymentConfig: "pipeline-app",
+    namespace: "staging-namespace"
 }
 ```
 ---
