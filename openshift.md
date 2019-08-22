@@ -7,11 +7,11 @@ Vadim Rutkovsky
 ![Cat pic](imgs/cat.png)
 
 Note:
-* Heroku-style deployment - git repo -> working app
 * Enterprise Kubernetes, developer-focused
+* Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
+* Heroku-style deployment - git repo -> working app
 * Operator-based distribution
 * OKD - community-supported version, Openshift Container Platform - enterprise version
-* Additional k8s objects - ImageStream, BuildConfigs, DeploymentConfigs
 
 ---
 ### Openshift - batteries included
